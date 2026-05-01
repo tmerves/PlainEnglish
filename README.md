@@ -1,4 +1,4 @@
-This language and project was designed and developed by Professor Michael Phipps in his ISCI311:Principles of Programming Languages course in Spring 2026 at the University at Albany.
+This language and project was designed and developed by Professor Michael Phipps in ISCI311: Principles of Programming Languages course in Spring 2026 at the University at Albany.
 
 This was a semester long project for the course, where we had to start from the ground up, eventually building a completed interpreter.  
 
