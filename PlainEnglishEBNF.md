@@ -1,0 +1,36 @@
+Program = (NEWLINE | TypeDef | Method)+
+
+Method = "To" {name}IDENTIFIER ({ignore}"a" {className}IDENTIFIER)? ("with" Parameter ("," Parameter)*)? NEWLINE+ StatementBlock 
+
+Parameter = {paramType}IDENTIFIER ("named" {nameOverride}IDENTIFIER)?
+
+StatementBlock = INDENT Statement+ DEDENT
+
+TypeDef = {ignore}("A" | "An") {name}IDENTIFIER "is" NEWLINE+ INDENT Field+ DEDENT {ignore}NEWLINE*
+
+Field = {type}IDENTIFIER {name}IDENTIFIER NEWLINE+
+
+Statement = If  | Loop | Set | Make | FunctionCall
+
+If = "If" BoolExpTerm NEWLINE+ StatementBlock ("else" NEWLINE {falseCase}StatementBlock)? 
+
+Loop = "Loop" BoolExpTerm NEWLINE+ StatementBlock 
+
+Set = "Set" VariableReference "to" Expression NEWLINE+
+
+Make = "Make" {type}IDENTIFIER "named" {name}IDENTIFIER NEWLINE+
+
+FunctionCall = {name}IDENTIFIER {obj}IDENTIFIER? ({ignore}"with" {parameter}Expression ("," {parameter}Expression)* )? NEWLINE+
+
+VariableReference = {name}IDENTIFIER ("of" {object}IDENTIFIER)?
+
+Expression = Term ( ("+"|"-") Term )*
+
+Term = Factor ( ("*"|"/"|"%") Factor )*
+
+Factor = NUMBER | VariableReference | "true" | "false" | STRINGLITERAL | CHARACTERLITERAL | {ignore}"(" Expression {ignore}")" 
+
+BoolExpTerm =  BoolExpFactor (("and"|"or") BoolExpTerm)* | "not" {notTerm}BoolExpTerm
+
+BoolExpFactor = ({lhs}Expression {compareOps}( "==" | "!=" | "<=" | ">=" | ">" | "<" ) {rhs}Expression) | VariableReference
+
